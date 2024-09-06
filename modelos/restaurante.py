@@ -2,22 +2,36 @@ class Restaurante:
   restaurantes = []
 
   def __init__(self, nome, categoria):
-    self.nome = nome
-    self.categoria = categoria
-    self.ativo = False
+    self._nome = nome.title()
+    self._categoria = categoria.upper()
+    self._ativo = False
     Restaurante.restaurantes.append(self)
 
   def __str__(self):
-    return f'{self.nome} | {self.categoria}'
+    return f'{self._nome} | {self._categoria}'
   
-  def listar_restaurantes():
-    for restaurante in Restaurante.restaurantes:
-      print(f'{restaurante.nome} | {restaurante.categoria} | {restaurante.ativo}')
+  
+  @classmethod
+  def listar_restaurantes(cls):
+    print()
+    print(f"{'Nome do Restaurante'.ljust(25)} | {'Categoria'.ljust(25)} | {'Status'}")
+    print('-' * 75)
+    for restaurante in cls.restaurantes:
+      print(f'{restaurante._nome.ljust(25)} | {restaurante._categoria.ljust(25)} | {restaurante.ativo}')
+    print()
+
+  @property
+  def ativo(self):
+    return '❎' if self._ativo else '🟩'
+  
+  def alternar_status(self):
+    self._ativo = not self._ativo
 
 
-restaurante_boizao = Restaurante('Boizão', 'Churrascaria')
+restaurante_boizao = Restaurante('Boizão', 'Churrasca')
+restaurante_boizao.alternar_status()
+restaurante_forno = Restaurante('forno de barro', 'Italiana')
 
-restaurante_forno = Restaurante('Frono de Barro', 'Italiana')
 
 Restaurante.listar_restaurantes()
 
